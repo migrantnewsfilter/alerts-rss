@@ -21,7 +21,12 @@ def format_entry(entry):
 
 feeds = [
     'https://www.google.com/alerts/feeds/09793917664791896102/1298760523418366190',
-    'https://www.google.com/alerts/feeds/09793917664791896102/9033615043716741803'
+    'https://www.google.com/alerts/feeds/09793917664791896102/6755748661536211551',
+    'https://www.google.com/alerts/feeds/09793917664791896102/9033615043716741803',
+    'https://www.google.com/alerts/feeds/09793917664791896102/8709692234058491434',
+    'https://www.google.com/alerts/feeds/09793917664791896102/15799638204728333841',
+    'https://www.google.com/alerts/feeds/09793917664791896102/13229414712099554011',
+    'https://www.google.com/alerts/feeds/09793917664791896102/13229414712099556140'
 ]
 
 # fetch raw RSS data via HTTP
