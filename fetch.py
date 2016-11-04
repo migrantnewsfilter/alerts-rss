@@ -1,17 +1,12 @@
-import feedparser
 from toolz import assoc
+import requests
+import xmltodict
 
 
 
 ##################################################
-# Functions
+# Reformat to our liking!
 #################################################
-
-def format_entry(entry):
-    new_id = entry['id'][38:] # encode ascii
-    return assoc(entry, 'id', new_id)
-
-
 
 
 
@@ -29,8 +24,14 @@ feeds = [
     'https://www.google.com/alerts/feeds/09793917664791896102/13229414712099556140'
 ]
 
-# fetch raw RSS data via HTTP
-data = map(feedparser.parse, feeds)
 
-# collapse into one list and format entries
-formatted_data = [ format_entry(entry) for feed in data for entry in feed.entries ]
+# fetch raw RSS data via HTTP
+def get_entries():
+    xml = (requests.get(feed).content for feed in feeds)
+    feedlist = (xmltodict.parse(el)['feed'].get('entry') for el in xml)
+
+    # create nested list of entries
+    entrylist = (entry if type(entry) == list else [entry] for entry in feedlist if entry)
+
+    # flatten
+    return (entry for entries in entrylist for entry in entries)
