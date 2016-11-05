@@ -1,18 +1,7 @@
 from toolz import assoc
-import requests
+import eventlet
+from eventlet.green import urllib2
 import xmltodict
-
-
-
-##################################################
-# Reformat to our liking!
-#################################################
-
-
-
-####################################################
-# Run
-####################################################
 
 feeds = [
     'https://www.google.com/alerts/feeds/09793917664791896102/1298760523418366190',
@@ -24,10 +13,17 @@ feeds = [
     'https://www.google.com/alerts/feeds/09793917664791896102/13229414712099556140'
 ]
 
+def fetch(url):
+    return urllib2.urlopen(url).read()
 
 # fetch raw RSS data via HTTP
 def get_entries():
-    xml = (requests.get(feed).content for feed in feeds)
+
+    # create generator from pooled http requests with eventlet
+    pool = eventlet.GreenPool(200)
+    xml = pool.imap(fetch, feeds)
+
+    # parse xml
     feedlist = (xmltodict.parse(el)['feed'].get('entry') for el in xml)
 
     # create nested list of entries

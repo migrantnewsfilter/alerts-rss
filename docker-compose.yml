@@ -1,5 +1,11 @@
 version: '2'
 services:
+  cassandra:
+    image: cassandra:latest
+    volumes:
+      - cassandra:/var/lib/cassandra
+    ports:
+      - "9042:9042"
   elasticsearch:
     image: elasticsearch:latest
     volumes:
@@ -15,3 +21,4 @@ services:
       - elasticsearch
 volumes:
   elasticsearch:
+  cassandra:

@@ -1,3 +1,4 @@
+import dateutil.parser
 from toolz import assoc
 from elasticsearch import Elasticsearch
 from elasticsearch.helpers import bulk
@@ -16,8 +17,21 @@ def create_action(entry):
         '_source': entry
     }
 
+def format_reduced(entry):
+    return {
+        'id': 'ge:' + entry['id'][38:].encode('ascii'),
+        'date': dateutil.parser.parse(entry.get('updated')),
+        'link': entry['link'].get('@href').encode('ascii'),
+        'title':  entry['title'].get('#text').encode('ascii'),
+        'body': entry['content'].get('#text').encode('ascii')
+    }
 
 def index_to_es(entries):
     formatted_data = (format_entry(entry) for entry in entries)
+    actions = (create_action(entry) for entry in formatted_data)
+    bulk(es, actions)
+
+def index_reduced(entries):
+    formatted_data = (format_reduced(entry) for entry in entries)
     actions = (create_action(entry) for entry in formatted_data)
     bulk(es, actions)
