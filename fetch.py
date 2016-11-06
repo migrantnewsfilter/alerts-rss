@@ -3,21 +3,11 @@ import eventlet
 from eventlet.green import urllib2
 import xmltodict
 
-feeds = [
-    'https://www.google.com/alerts/feeds/09793917664791896102/1298760523418366190',
-    'https://www.google.com/alerts/feeds/09793917664791896102/6755748661536211551',
-    'https://www.google.com/alerts/feeds/09793917664791896102/9033615043716741803',
-    'https://www.google.com/alerts/feeds/09793917664791896102/8709692234058491434',
-    'https://www.google.com/alerts/feeds/09793917664791896102/15799638204728333841',
-    'https://www.google.com/alerts/feeds/09793917664791896102/13229414712099554011',
-    'https://www.google.com/alerts/feeds/09793917664791896102/13229414712099556140'
-]
-
 def fetch(url):
     return urllib2.urlopen(url).read()
 
 # fetch raw RSS data via HTTP
-def get_entries():
+def get_entries(feeds):
 
     # create generator from pooled http requests with eventlet
     pool = eventlet.GreenPool(200)
