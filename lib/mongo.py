@@ -20,7 +20,7 @@ def chunk(n, it):
     return takewhile(bool, (list(islice(src, n)) for _ in count(0)))
 
 def write_entries(client, entries):
-    collection = client['newsfilter'].alerts
+    collection = client['newsfilter'].news
     prepared = (prepare_entry(entry) for entry in entries)
     chunked = chunk(20, prepared)
 

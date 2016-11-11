@@ -1,6 +1,6 @@
-from mongo import write_entries
-from fetch import get_entries
-from feeds import get_feeds
+from lib.mongo import write_entries
+from lib.fetch import get_entries
+from lib.feeds import get_feeds
 from pymongo import MongoClient
 import os
 import schedule
