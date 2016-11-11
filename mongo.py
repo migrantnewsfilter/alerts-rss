@@ -1,4 +1,4 @@
-from itertools import islice, takewhile, count
+from itertools import islice, takewhile, counto
 from pymongo import MongoClient, UpdateOne
 import dateutil.parser
 from datetime import datetime
@@ -7,7 +7,7 @@ def prepare_entry(entry):
     return {
         '_id': 'ge:' + entry['id'][38:].encode('ascii'),
         'published': dateutil.parser.parse(entry.get('updated')),
-        'added': datetime.now(),
+        'added': datetime.utcnow(),
         'content': {
             'link': entry['link'].get('@href').encode('ascii'),
             'title':  entry['title'].get('#text'),
