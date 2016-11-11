@@ -1,4 +1,4 @@
-from itertools import islice, takewhile, counto
+from itertools import islice, takewhile, count
 from pymongo import MongoClient, UpdateOne
 import dateutil.parser
 from datetime import datetime

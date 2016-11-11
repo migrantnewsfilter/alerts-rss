@@ -1,24 +1,17 @@
 version: '2'
 services:
-  cassandra:
-    image: cassandra:latest
+  rss:
+    build:
+      context: .
+    environment:
+      MONGO_HOST: mongodb://mongo:27017
     volumes:
-      - cassandra:/var/lib/cassandra
-    ports:
-      - "9042:9042"
-  elasticsearch:
-    image: elasticsearch:latest
+      - .:/alerts-rss
+  mongo:
+    image: mongo:latest
     volumes:
-      - elasticsearch:/usr/share/elasticsearch/data
+      - mongo:/data/db
     ports:
-      - "9200:9200"
-      - "9300:9300"
-  kibana:
-    image: kibana
-    ports:
-      - "5601:5601"
-    depends_on:
-      - elasticsearch
+      - "27017:27017"
 volumes:
-  elasticsearch:
-  cassandra:
+  mongo:
