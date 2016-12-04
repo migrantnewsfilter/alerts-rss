@@ -1,6 +1,7 @@
 from toolz import assoc
 import eventlet
 from eventlet.green import urllib2
+
 import xmltodict
 
 def fetch(url):

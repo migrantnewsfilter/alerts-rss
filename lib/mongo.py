@@ -2,6 +2,10 @@ from itertools import islice, takewhile, count
 from pymongo import MongoClient, UpdateOne
 import dateutil.parser
 from datetime import datetime
+from bs4 import BeautifulSoup
+
+def clean_html(s):
+    return BeautifulSoup(s, 'html5lib').get_text() if s else ''
 
 def prepare_entry(entry):
     return {
@@ -10,8 +14,8 @@ def prepare_entry(entry):
         'added': datetime.utcnow(),
         'content': {
             'link': entry['link'].get('@href').encode('ascii'),
-            'title':  entry['title'].get('#text'),
-            'body': entry['content'].get('#text')
+            'title':  clean_html(entry['title'].get('#text')),
+            'body': clean_html(entry['content'].get('#text'))
         }
     }
 
