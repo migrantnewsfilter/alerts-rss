@@ -13,7 +13,6 @@ regex==2016.10.22
 requests==2.11.1
 ruamel.ordereddict==0.4.9
 ruamel.yaml==0.12.15
-schedule==0.3.2
 six==1.10.0
 toolz==0.8.0
 typing==3.5.2.2
